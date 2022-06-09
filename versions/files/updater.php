@@ -1,0 +1,5 @@
+<?php
+
+/**
+ * THIS FILE IS PART OF THE EASY UPGRADER
+ */
