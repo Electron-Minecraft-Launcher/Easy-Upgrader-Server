@@ -30,10 +30,9 @@ get_all_files($version);
 $update = [];
 $update = array(
 	'version' => $version,
-	'needsToReinstall' => ['configAndDB', 'api'],
+	'needsToReinstall' => [],
 	"removedFilesAndDirectories" => [
-		"/assets/css copy/",
-		"HoneyWeb.zip"
+		"/dir/subdir2/"
 	],
 	'addedAndModifiedFilesAndDirectories' => $files
 
