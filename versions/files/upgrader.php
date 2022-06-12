@@ -133,6 +133,15 @@ if ($presumed_current_version != $current_version) {
 
 // (6) Delete the files and folders that have to be deleted. Install the new files and folders.
 
+/**
+ * You can also delete here the database if needed (you can make a condition with the 'needToReinstall' json key from the '/version/index.php' file).
+ */
+// eg.:
+// if (in_array('database', get_versions()[0][$i]->needsToReinstall)) {
+//   $db->query('DROP TABLE IF EXISTS `users`, `posts`, ...');
+//   /* Create table here if necessary */
+// }
+
 $new_version_info = get_new_version($_GET['version']);
 
 foreach ($new_version_info[0]->removedFilesAndDirectories as $key => $value) {
@@ -153,17 +162,25 @@ http_response_code(200);
 exit;
 
 
+/**
+ * You're almost there! You just need to change the URL of your server.
+ */
 
+$easy_upgrader_server_url = 'http://server.easy-upgrader.off/'; // Don't forget the trailing slash.
 
 
 /**
- * Get the list of the versions of the EML AdminTool from the electron-minecraft-launcher.ml website in an array.
- * @return array|object List of versions
+ * Well done! You have finished to configure your upgrader file!
+ * Now, you need to configure your client side.
  */
+
 function get_versions()
 {
+
+  global $easy_upgrader_server_url;
+
   try {
-    $ch = curl_init("http://server.easy-upgrader.off/versions/"); // The URL to get the list of versions: DON'T FORGET TO CHANGE IT TO THE RIGHT URL.
+    $ch = curl_init($easy_upgrader_server_url . "versions/");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     $data = json_decode(curl_exec($ch));
@@ -187,14 +204,13 @@ function get_versions()
   }
 }
 
-/**
- * This function get the informations of the new version.
- * @param string $version The new version (from the GET version).
- */
 function get_new_version($version)
 {
+
+  global $easy_upgrader_server_url;
+
   try {
-    $ch = curl_init("http://server.easy-upgrader.off/versions/" . $version . "/"); // The URL to get the list of versions: DON'T FORGET TO CHANGE IT TO THE RIGHT URL.
+    $ch = curl_init($easy_upgrader_server_url . "versions/" . $version . "/");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     $data = json_decode(curl_exec($ch));
@@ -218,24 +234,15 @@ function get_new_version($version)
   }
 }
 
-/**
- * This function delete a file or a folder and its content.
- * @param $dir
- */
 function rmrf($dir)
 {
-
   if (is_dir($dir)) {
-
     $files = array_diff(scandir($dir), ['.', '..']);
-
     foreach ($files as $file) {
       rmrf($dir . "/" . $file);
     }
-
     rmdir($dir);
   } else {
-
     unlink($dir);
   }
 }
