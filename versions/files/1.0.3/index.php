@@ -7,8 +7,11 @@
 </head>
 
 <body>
+	<?php
+	include('./include.php');
+	?>
 	Here is a test file for the Easy Upgrader Client.<br>
-	v1.0.3 NOT beta
+	v<?= get_current_version() ?> NOT BETA
 </body>
 
 </html>

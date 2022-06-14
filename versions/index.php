@@ -101,6 +101,7 @@ echo json_encode($versions);
  * 								 │
  * 						  	 └─── files/
  * 						  	  		├─── .htaccess (your new .htaccess file)
+ * 											├─── upgrader.php
  * 						  	  		│
  * 								    	├─── 1.0.3/ (your second new folder)
  * 								    	│	 └─── ... (your files)
@@ -123,5 +124,6 @@ echo json_encode($versions);
  * 						     ├─── index.php
  * 						     │
  * 						     └─── files/
- * 						  	  		└─── .htaccess
+ * 						  	  		├─── .htaccess
+ * 											└─── upgrader.php
  */

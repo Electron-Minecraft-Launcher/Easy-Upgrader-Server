@@ -11,6 +11,7 @@ error_reporting(0);
  * It will be downloaded by the easy-upgrader-client to upgrade the web application.
  */
 
+
 /**
  * Here is a diagram of the operation of the 'upgrader.php' file:
  * 
@@ -57,6 +58,12 @@ error_reporting(0);
  */
 
 
+/**
+ * @var string Please indicate the address of your easy-upgrader-server website
+ */
+$easy_upgrader_server_url = 'http://server.easy-upgrader.off/'; // Don't forget the trailing slash.
+
+
 // (1) Check if the variable GET 'version' is set. The variable GET 'version' is the version of the web application that the user wants to install.
 
 if (!isset($_GET['version']) || empty($_GET['version'])) {
@@ -96,7 +103,7 @@ $presumed_current_version = get_versions()[0][$i]->version;
 // ------ You can make your condition here ------
 // eg.:
 // if (in_array($presumed_current_version, ['1.0.2', '1.0.1', '1.0.0', '1.0.0-beta', '1.0.0-alpha', ...])) { 
-if (!include('assets/includes/main.php')) {
+if (!include('./include.php')) {
   echo 'Error: Unable to include the file.';
   http_response_code(500);
   exit;
@@ -160,13 +167,6 @@ foreach ($new_version_info[0]->addedAndModifiedFilesAndDirectories as $key => $v
 echo 'Success: The upgrade has been completed.';
 http_response_code(200);
 exit;
-
-
-/**
- * You're almost there! You just need to change the URL of your server.
- */
-
-$easy_upgrader_server_url = 'http://server.easy-upgrader.off/'; // Don't forget the trailing slash.
 
 
 /**

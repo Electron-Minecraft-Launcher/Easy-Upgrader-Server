@@ -20,7 +20,7 @@ header('Content-Type: application/json');
  * Exemple of different values for the 'version' key in the $update array: (cf. ../index.php)
  * 
  * Exemple of different values for the 'removedFilesAndDirectories' key in the $update array:
- *  - ['/assets/css/', '/assets/js/', '/home/', 'index.php', '/assets/includes/footer.html']: these directories (from the root) and their subdirectories will be deleted
+ *  - ['assets/css/', 'assets/js/', 'home/', 'index.php', 'assets/includes/footer.html']: these files/directories (from the root; do not add a slash at the beginning of the path) and their subdirectories will be deleted
  */
 
 $version = "1.0.3";
@@ -32,7 +32,7 @@ $update = array(
 	'version' => $version,
 	'needsToReinstall' => [],
 	"removedFilesAndDirectories" => [
-		"/dir/subdir2/"
+		"dir/subdir2/"
 	],
 	'addedAndModifiedFilesAndDirectories' => $files
 
@@ -76,7 +76,7 @@ function get_all_files($v)
 			} else {
 				$hash = hash_file('sha1', $dir . "/" . $value);
 				$size = filesize($dir . "/" . $value);
-				$path = str_replace("../files/" . $version, "", $dir . "/" . $value);
+				$path = str_replace("../files/" . $version . '/', "", $dir . "/" . $value);
 				$url = "http://" . $_SERVER['HTTP_HOST'] . "/versions/files/" . $v . '/' . $value;
 
 				array_push($files, [
