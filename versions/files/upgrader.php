@@ -193,14 +193,14 @@ function get_versions()
           break;
         default:
           curl_close($ch);
-          return ['Unable to check the versions of the EML AdminTool', false];
+          return ['Unable to check the versions', false];
       }
     } else {
       curl_close($ch);
-      return ['Unable to check the versions of the EML AdminTool', false];
+      return ['Unable to check the versions', false];
     }
   } catch (Exception $e) {
-    return ['Unable to check the versions of the EML AdminTool', false];
+    return ['Unable to check the versions', false];
   }
 }
 
@@ -223,14 +223,14 @@ function get_new_version($version)
           break;
         default:
           curl_close($ch);
-          return ['Unable to check the new version of the EML AdminTool', false];
+          return ['Unable to check the new version', false];
       }
     } else {
       curl_close($ch);
-      return ['Unable to check the new version of the EML AdminTool', false];
+      return ['Unable to check the new version', false];
     }
   } catch (Exception $e) {
-    return ['Unable to check the new version of the EML AdminTool', false];
+    return ['Unable to check the new version', false];
   }
 }
 
